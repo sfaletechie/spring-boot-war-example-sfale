@@ -24,7 +24,7 @@ pipeline{
                 message 'continueToPROD'
             }
             steps{
-                deploy adapters: [tomcat7(credentialsId: 'tomcat8details', path: '', url: 'http://192.168.29.33:8080/')], contextPath: '/app', onFailure: false, war: '**/*.war'
+                deploy adapters: [tomcat7(credentialsId: 'tomcat8details', path: '', url: 'http://192.168.29.42:8080/')], contextPath: '/app', onFailure: false, war: '**/*.war'
             }
         }
     }
