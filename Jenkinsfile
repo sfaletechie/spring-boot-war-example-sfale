@@ -7,7 +7,7 @@ pipeline{
         stage("TEST"){
             steps{
                 sh 'mvn test'
-                slackSend channel: 'devops-notifications', message: 'this is TEST stage'
+                slackSend channel: 'devops-notifications', message: 'this is TEST stage ${BUILD_ID}'
             }
         }
         stage("Build"){
