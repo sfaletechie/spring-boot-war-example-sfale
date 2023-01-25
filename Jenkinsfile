@@ -33,7 +33,7 @@ pipeline{
             }
             steps{
                 slackSend channel: 'devops-notifications', message: 'this is deployOnPROD stage'
-                deploy adapters: [tomcat7(credentialsId: 'tomcat8details', path: '', url: 'http://192.168.29.42:8080/')], contextPath: '/app', onFailure: false, war: '**/*.war'
+                deploy adapters: [tomcat7(credentialsId: 'tomcat8details', path: '', url: 'http://192.168.29.42:8081/repository/simpleapp-release/')], contextPath: '/app', onFailure: false, war: '**/*.war'
             }
         }
     }
