@@ -16,6 +16,11 @@ pipeline{
                 sh 'mvn package'
             }
         }
+        stage("artifactsUpload"){
+            steps{
+                nexusArtifactUploader credentialsId: 'adminnexus', groupId: 'com.springhow.example', nexusUrl: '192.168.29.42:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'simpleapp-release', version: 'com.springhow.example'
+            }
+        }   
         stage("deployOnTest"){
             steps{
                 slackSend channel: 'devops-notifications', message: 'this is deployOnTest stage'
