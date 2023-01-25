@@ -18,7 +18,7 @@ pipeline{
         }
         stage("artifactsUpload"){
             steps{
-                nexusArtifactUploader credentialsId: 'adminnexus', groupId: 'com.springhow.example', nexusUrl: '192.168.29.42:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'simpleapp-release', version: 'com.springhow.example'
+                nexusArtifactUploader credentialsId: 'adminnexus', groupId: 'com.springhow.example', nexusUrl: '192.168.29.42:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'simpleapp-release', version: '0.0.1-SNAPSHOT'
             }
         }   
         stage("deployOnTest"){
