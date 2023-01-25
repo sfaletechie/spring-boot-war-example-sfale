@@ -20,7 +20,7 @@ pipeline{
             steps{
                 nexusArtifactUploader artifacts: [[artifactId: 'hello-world', classifier: '', file: 'target/hello-world-0.0.1-SNAPSHOT.war', type: 'war']], 
                     credentialsId: 'adminnexus', groupId: 'com.springhow.example', 
-                    nexusUrl: 'http://192.168.29.42:8081/#admin/repository/repositories', nexusVersion: 'nexus3', protocol: 'http', repository: 'simpleapp-release', version: '0.0.1-SNAPSHOT'
+                    nexusUrl: 'http://192.168.29.42:8081/#admin', nexusVersion: 'nexus3', protocol: 'http', repository: 'simpleapp-release', version: '0.0.1-SNAPSHOT'
             }
         }   
         stage("deployOnTest"){
