@@ -1,0 +1,18 @@
+pipeline {
+  agent any
+  tools {
+    maven 'maven'
+    }
+  stages {
+    stage('build') {
+      steps {
+        sh 'mvn clean package -Dcheckstyle.skip'
+      }
+    }
+    stage('Scan') {
+      steps {
+        sh 'grype dir:. --scope AllLayers'
+      }
+    }
+  }
+}
