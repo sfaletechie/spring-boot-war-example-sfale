@@ -18,8 +18,34 @@ pipeline{
         }
         stage("scan"){
             steps{
-                sh 'grype dir:. --scope AllLayers'
+                sh 'grype dir:. --scope AllLayers --fail-on=critical'
              }
+        }
+       stage("deployOnTest"){
+            steps{
+                slackSend channel: 'devops-notifications', message: 'this is deployOnTest stage'
+                deploy adapters: [tomcat7(credentialsId: 'tomcat8details1', path: '', url: 'http://192.168.29.22:8080/')], contextPath: '/app', onFailure: false, war: '**/*.war'
+            }
+        }
+        stage("deployOnPROD"){
+             input {
+                message 'continueToPROD'
+            }
+            steps{
+                slackSend channel: 'devops-notifications', message: 'this is deployOnPROD stage'
+                deploy adapters: [tomcat7(credentialsId: 'tomcat8details1', path: '', url: 'http://192.168.29.171:8080')], contextPath: '/app', onFailure: false, war: '**/*.war'
+            }
+        }
+    }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
         }
     }
 }
