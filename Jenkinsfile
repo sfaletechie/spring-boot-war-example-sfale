@@ -22,7 +22,7 @@ pipeline{
                 deploy adapters: [tomcat7(credentialsId: 'tomcat8details', path: '', url: 'http://192.168.29.22:8080/')], contextPath: '/app', onFailure: false, war: '**/*.war'
             }
         }
-        stage("deployOnPROD"){\
+        stage("deployOnPROD"){
              input {
                 message 'continueToPROD'
             }
