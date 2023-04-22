@@ -16,7 +16,7 @@ pipeline{
                 sh 'mvn package'
             }
         }
-        stage("scan"){
+        stage("Scan"){
             steps{
                 sh '#grype dir:. --scope AllLayers --fail-on=critical'
                 sh 'grype dir:. --scope AllLayers'
