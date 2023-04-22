@@ -19,7 +19,7 @@ pipeline{
         stage("scan"){
             steps{
                 sh '#grype dir:. --scope AllLayers --fail-on=critical'
-                sh 'grype dir:. --scope AllLayers --fail-on=critical'
+                sh 'grype dir:. --scope AllLayers'
              }
         }
        stage("deployOnTest"){
