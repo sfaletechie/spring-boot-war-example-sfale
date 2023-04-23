@@ -27,9 +27,9 @@ pipeline{
                 sh '#grype dir:. --scope AllLayers --fail-on=critical'
                 sh 'ASgrype dir:. --scope AllLayers'
              }
-             when {
-                expression { currentBuild.getPreviousSuccessfulBuild()?.getResult() != 'FAILURE' }
-            }
+            // when {
+            //    expression { currentBuild.getPreviousSuccessfulBuild()?.getResult() != 'FAILURE' }
+            //}
         }
        stage("deployOnTest"){
             steps{
