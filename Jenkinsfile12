@@ -9,38 +9,38 @@ pipeline{
                 sh 'mvn test'
                 slackSend channel: 'devops-notifications', message: 'this is TEST stage $BUILD_ID'
             }
+            when {
+                expression { currentBuild.getPreviousSuccessfulBuild()?.getResult() != 'FAILURE' }
+            }
         }
         stage("Build"){
-            dependencies {
-                stage('Test')
-            }
             steps{
                 slackSend channel: 'devops-notifications', message: 'this is BUILD stage'
                 sh 'mvn package'
             }
+            when {
+                expression { currentBuild.getPreviousSuccessfulBuild()?.getResult() != 'FAILURE' }
+            }
         }
         stage("Scan"){
-            dependencies {
-                stage('Build')
-            }
             steps{
                 sh '#grype dir:. --scope AllLayers --fail-on=critical'
                 sh 'grype dir:. --scope AllLayers'
              }
+             when {
+                expression { currentBuild.getPreviousSuccessfulBuild()?.getResult() != 'FAILURE' }
+            }
         }
        stage("deployOnTest"){
-            dependencies {
-                stage('Scan')
-            }
             steps{
                 slackSend channel: 'devops-notifications', message: 'this is deployOnTest stage'
                 deploy adapters: [tomcat7(credentialsId: 'tomcat8details1', path: '', url: 'http://192.168.29.22:8080/')], contextPath: '/app', onFailure: false, war: '**/*.war'
             }
+            when {
+                expression { currentBuild.getPreviousSuccessfulBuild()?.getResult() != 'FAILURE' }
+            }
         }
         stage("deployOnPROD"){
-            dependencies {
-                stage('deployOnTest')
-            }
              input {
                 message 'continueToPROD'
             }
