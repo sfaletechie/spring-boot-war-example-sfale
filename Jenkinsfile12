@@ -19,7 +19,7 @@ pipeline{
                 sh 'mvn package'
             }
             when {
-                expression { currentBuild.getPreviousSuccessfulBuild()?.getResult() = 'FAILURE' }
+                expression { currentBuild.getPreviousSuccessfulBuild()?.getResult() != 'FAILURE' }
             }
         }
         stage("Scan"){
